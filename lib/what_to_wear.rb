@@ -63,6 +63,25 @@ module WhatToWear
     max_temps_today.max
   end
 
+  def self.humidity
+    case
+    when avg_humidity_today < 25
+      "Not much humidity"
+    when avg_humidity_today >= 25 && avg_humidity_today < 50
+      "A little humidity"
+    when avg_humidity_today >= 50 && avg_humidity_today < 75
+      "A fair amount of humidity"
+    when avg_humidity_today >= 75
+      "Quite humid"
+    end
+  end
+
+  def self.avg_humidity_today
+    today = forecast[2..8]
+    humidities_today = today.map { |hour_period| hour_period.dig("main").dig("humidity")}
+    humidities_today.inject(:+) / humidities_today.size
+  end
+
   def self.configure
     Raven.configure do |config|
       config.dsn = ENV["SENTRY_DSN"] if ENV["SENTRY_DSN"]
