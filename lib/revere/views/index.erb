@@ -1,5 +1,0 @@
-<% Revere::Trello::BOARDS.each do |board_name, _board_id| %>
-  <form action = "/create_trello_webhook/<%= board_name %>" method = "post">
-    <input type="submit" name="submit" value="Submit Trello <%= board_name %> Webhook" />
-  </form>
-<% end %>
